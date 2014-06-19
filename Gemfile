@@ -1,4 +1,9 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in griddler-cloudmailin.gemspec
+gem "griddler", github: "thoughtbot/griddler"
+gem "griddler-sendgrid", github: "thoughtbot/griddler-sendgrid"
+gem "griddler-mandrill", github: "wingrunr21/griddler-mandrill"
+gem "griddler-mailgun", github: "bradpauly/griddler-mailgun"
+gem "griddler-postmark", github: "thoughtbot/griddler-postmark"
+
 gemspec
