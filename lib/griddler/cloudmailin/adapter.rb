@@ -13,22 +13,30 @@ module Griddler
       end
 
       def normalize_params
-        {
-          to: params[:envelope][:to].split(','),
+        params.merge(
+          to: tos,
           cc: ccs,
           from: params[:envelope][:from],
           subject: params[:headers][:Subject],
           text: params[:plain],
           attachments: params.fetch(:attachments) { [] },
-        }
+        )
       end
 
       private
 
       attr_reader :params
 
+      def recipients(section, field)
+        params[section][field].to_s.split(',').map(&:strip)
+      end
+
       def ccs
-        params[:headers][:Cc].to_s.split(',').map(&:strip)
+        recipients(:headers, :Cc)
+      end
+
+      def tos
+        recipients(:headers, :To) | recipients(:envelope, :to)
       end
     end
   end
