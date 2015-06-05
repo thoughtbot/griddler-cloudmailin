@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Griddler::Cloudmailin::VERSION
   spec.authors       = [""]
   spec.email         = [""]
-  spec.summary       = %q{Griddler Plugin for cloudmailin}
-  spec.description   = %q{Griddler Plugin for cloudmailin email parsing service}
+  spec.summary       = 'Griddler Plugin for cloudmailin'
+  spec.description   = 'Griddler Plugin for cloudmailin email parsing service'
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -21,6 +21,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency 'rubocop', '~> 0.36'
+  spec.add_development_dependency 'gem-release', '~> 0.7'
 
   spec.add_dependency "griddler"
+  spec.add_dependency 'mime-types', '< 3.0', '>= 1.16' # 3.0 depends on Ruby >= 2.0
 end
