@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Griddler::Cloudmailin::VERSION
   spec.authors       = [""]
   spec.email         = [""]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = 'CloudMailin adapter for Griddler'
+  spec.description   = 'Adapter to allow the use of CloudMailin Incoming Addresses with Griddler'
   spec.homepage      = ""
   spec.license       = "MIT"
 

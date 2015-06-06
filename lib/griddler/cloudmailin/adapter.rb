@@ -13,22 +13,42 @@ module Griddler
       end
 
       def normalize_params
-        {
-          to: params[:envelope][:to].split(','),
+        normalized_params = {
+          to: tos,
           cc: ccs,
-          from: params[:envelope][:from],
+          from: params[:headers][:From],
           subject: params[:headers][:Subject],
           text: params[:plain],
           attachments: params.fetch(:attachments) { [] },
         }
+
+        normalized_params[:bcc] = bcc unless bcc.empty?
+        normalized_params
       end
 
       private
 
       attr_reader :params
 
+      def recipients(field)
+        params[:headers][field].to_s.split(',').map(&:strip)
+      end
+
       def ccs
-        params[:headers][:Cc].to_s.split(',').map(&:strip)
+        @ccs ||= recipients(:Cc)
+      end
+
+      def tos
+        @tos ||= recipients(:To)
+      end
+
+      def bcc
+        return @bcc if @bcc
+        envelope_to = params[:envelope][:to]
+        header_to_emails = tos.map do |to|
+          Griddler::EmailParser.parse_address(to)[:email]
+        end
+        @bcc = header_to_emails.include?(envelope_to) ? [] : [envelope_to]
       end
     end
   end
