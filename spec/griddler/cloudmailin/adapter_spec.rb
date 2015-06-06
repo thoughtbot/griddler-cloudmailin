@@ -1,19 +1,51 @@
 require 'spec_helper'
 
 describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
-  it_should_behave_like 'Griddler adapter', :cloudmailin, {
-    envelope: {
-      to: 'Hello World <hi@example.com>',
-      from: 'There <there@example.com>',
-    },
-    plain: 'hi',
-    headers: { Cc: 'emily@example.com' },
-  }
+  context 'without bcc' do
+    it_should_behave_like 'Griddler adapter', :cloudmailin, {
+      envelope: {
+        to: 'hi@example.com',
+        from: 'there@example.com',
+      },
+      plain: 'hi',
+      headers: {
+        From: 'there@example.com',
+        To: 'Hello World <hi@example.com>',
+        Cc: 'emily@example.com'
+      },
+    }
+  end
+
+  context 'with bcc' do
+    it_should_behave_like 'Griddler adapter', :cloudmailin, {
+      envelope: {
+        to: 'sandra@example.com',
+        from: 'there@example.com',
+      },
+      plain: 'hi',
+      headers: {
+        From: 'there@example.com',
+        To: 'Hello World <hi@example.com>',
+        Cc: 'emily@example.com'
+      },
+    }
+  end
 
   it 'normalizes parameters' do
     expect(Griddler::Cloudmailin::Adapter.normalize_params(default_params)).to be_normalized_to({
       to: ['Some Identifier <some-identifier@example.com>'],
       cc: ['emily@example.com'],
+      from: 'Joe User <joeuser@example.com>',
+      subject: 'Re: [ThisApp] That thing',
+      text: /Dear bob/
+    })
+  end
+
+  it 'normalizes parameters where the recipient has been BCCed' do
+    expect(Griddler::Cloudmailin::Adapter.normalize_params(bcc_params)).to be_normalized_to({
+      to: ['Some Identifier <some-identifier@example.com>'],
+      cc: ['emily@example.com'],
+      bcc: ['sandra@example.com'],
       from: 'Joe User <joeuser@example.com>',
       subject: 'Re: [ThisApp] That thing',
       text: /Dear bob/
@@ -36,8 +68,13 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
 
   def default_params
     {
-      envelope: { to: 'Some Identifier <some-identifier@example.com>', from: 'Joe User <joeuser@example.com>' },
-      headers: { Subject: 'Re: [ThisApp] That thing', Cc: 'emily@example.com' },
+      envelope: { to: 'some-identifier@example.com', from: 'joeuser@example.com' },
+      headers: {
+        Subject: 'Re: [ThisApp] That thing',
+        From: 'Joe User <joeuser@example.com>',
+        To: 'Some Identifier <some-identifier@example.com>',
+        Cc: 'emily@example.com'
+      },
       plain: <<-EOS.strip_heredoc.strip
         Dear bob
 
@@ -46,5 +83,11 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
         hey sup
       EOS
     }
+  end
+
+  def bcc_params
+    p = default_params
+    p[:envelope][:to] = 'sandra@example.com'
+    p
   end
 end
