@@ -19,7 +19,7 @@ module Griddler
           from: params[:headers][:From],
           subject: params[:headers][:Subject],
           text: params[:plain],
-          attachments: params.fetch(:attachments) { [] },
+          attachments: params.fetch(:attachments) { {} }.values,
         }
 
         normalized_params[:bcc] = bcc unless bcc.empty?
@@ -45,8 +45,8 @@ module Griddler
       def bcc
         return @bcc if @bcc
         envelope_to = params[:envelope][:to]
-        header_to_emails = tos.map do |to|
-          Griddler::EmailParser.parse_address(to)[:email]
+        header_to_emails = (tos | ccs).map do |addressee|
+          Griddler::EmailParser.parse_address(addressee)[:email]
         end
         @bcc = header_to_emails.include?(envelope_to) ? [] : [envelope_to]
       end
