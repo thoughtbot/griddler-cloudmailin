@@ -20,6 +20,7 @@ module Griddler
           subject: params[:headers][:Subject],
           text: params[:plain],
           attachments: params.fetch(:attachments) { [] },
+          headers: params[:headers]
         }
       end
 
