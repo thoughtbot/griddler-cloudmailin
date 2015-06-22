@@ -75,7 +75,7 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
   end
 
   it 'changes attachments to an array of files' do
-    params = default_params.merge(attachments: { '0': upload_1, '1': upload_2 })
+    params = default_params.merge(attachments: { '0' => upload_1, '1' => upload_2 })
 
     normalized_params = normalized(params)
     expect(normalized_params[:attachments]).to include(upload_1, upload_2)
