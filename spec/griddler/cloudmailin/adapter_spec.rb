@@ -16,7 +16,8 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
       cc: ['emily@example.com'],
       from: 'Joe User <joeuser@example.com>',
       subject: 'Re: [ThisApp] That thing',
-      text: /Dear bob/
+      text: /Dear bob/,
+      headers: { Subject: 'Re: [ThisApp] That thing', Cc: 'emily@example.com' }
     })
   end
 
