@@ -14,8 +14,18 @@ gem 'griddler-cloudmailin'
 
 ## Usage
 
-TODO: Write usage instructions here
+See the [Griddler](https://github.com/thoughtbot/griddler) gem for usage instructions
+
+## Upgrading from version 0.0.1
+
+Griddler::Cloudmailin now includes all details of the recipients of the email in the `to` array of a `Griddler::Email`
+object. In version 0.0.1 this method returned the bare address of the Cloudmailin recipient only.
+
+There is an additional `bcc` array which contains the Cloudmailin recipient if it was BCCed on the email.
+
+Attachments are now returned in the `attachments` array.
 
 ## More Information
 
-* [Cloudmailin Docs](http://docs.cloudmailin.com/)
+* [Griddler](https://github.com/thoughtbot/griddler)
+* [Cloudmailin documentation](http://docs.cloudmailin.com/)
