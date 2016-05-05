@@ -2,4 +2,5 @@
 inherit_from: .rubocop_todo.yml
 
 Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: 'no_comma'
+  EnforcedStyleForMultiline: no_comma
+  Enabled: true
