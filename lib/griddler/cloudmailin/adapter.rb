@@ -19,7 +19,9 @@ module Griddler
           from: params[:headers][:From],
           subject: params[:headers][:Subject],
           text: params[:plain],
+          html: params[:html],
           attachments: params.fetch(:attachments) { {} }.values,
+          headers: params[:headers]
         }
 
         normalized_params[:bcc] = bcc unless bcc.empty?
