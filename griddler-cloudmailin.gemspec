@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'gem-release', '~> 0.7'
 
   spec.add_dependency "griddler"
-  spec.add_dependency 'mime-types', '~> 2.99' # 3.0 depends on Ruby >= 2.0
+  spec.add_dependency 'mime-types', '< 3.0', '>= 1.16' # 3.0 depends on Ruby >= 2.0
 end
