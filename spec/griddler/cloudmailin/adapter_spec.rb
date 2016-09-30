@@ -95,6 +95,10 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
     expect(normalized[:cc]).to eq([default_params[:headers][:Cc]])
   end
 
+  it 'returns the date' do
+    expect(normalized[:date]).to eq(default_params[:headers][:Date].to_datetime)
+  end
+
   it 'returns an array even if cc is empty' do
     expect(normalized(nocc_params)[:cc]).to eq([])
   end
@@ -103,6 +107,8 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
     Griddler::Cloudmailin::Adapter.normalize_params(params)
   end
 
+  # There are some example real-world headers from Cloudmailin
+  # in doc/real_world_headers.rb
   def default_params
     {
       envelope: {
@@ -113,15 +119,10 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
         Subject: 'Re: [ThisApp] That thing',
         From: 'Joe User <joeuser@example.com>',
         To: 'Some Identifier <some-identifier@example.com>',
-        Cc: 'emily@example.com'
+        Cc: 'emily@example.com',
+        Date: 'Fri, 30 Sep 2016 10:30:15 +0200'
       },
-      plain: <<-EOS.strip_heredoc.strip
-        Dear bob
-
-        Reply ABOVE THIS LINE
-
-        hey sup
-      EOS
+      plain: "Dear bob\n\nReply ABOVE THIS LINE\n\nhey sup"
     }
   end
 

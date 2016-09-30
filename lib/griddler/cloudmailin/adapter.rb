@@ -13,15 +13,18 @@ module Griddler
       end
 
       def normalize_params
+        headers = params[:headers]
+
         normalized_params = {
           to: tos,
           cc: ccs,
-          from: params[:headers][:From],
-          subject: params[:headers][:Subject],
+          from: headers[:From],
+          date: headers[:Date].try(:to_datetime),
+          subject: headers[:Subject],
           text: params[:plain],
           html: params[:html],
           attachments: params.fetch(:attachments) { {} }.values,
-          headers: params[:headers]
+          headers: headers
         }
 
         normalized_params[:bcc] = bcc unless bcc.empty?
