@@ -1,0 +1,13 @@
+---
+inherit_from: .rubocop_todo.yml
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+  Enabled: true
+
+StringLiterals:
+  EnforcedStyle: single_quotes
+  Enabled: false # turn off until we can do a global fix
+
+LineLength:
+  Max: 120
