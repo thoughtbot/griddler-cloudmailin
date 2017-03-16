@@ -1,6 +1,6 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "griddler", github: "thoughtbot/griddler" # So as to include the spec folder
+gem 'griddler', github: 'thoughtbot/griddler' # So as to include the spec folder
 
 gemspec
 
