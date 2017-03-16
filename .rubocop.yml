@@ -47,3 +47,7 @@ Style/ExtraSpacing:
 Lint/LiteralInInterpolation:
   Description: 'Avoid interpolating literals in strings'
   AutoCorrect: true
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: no_comma
+  Enabled: true
