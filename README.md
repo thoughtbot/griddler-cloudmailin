@@ -1,4 +1,9 @@
 # Griddler::Cloudmailin
+[![Gem Version](https://badge.fury.io/rb/griddler-cloudmailin.svg)](https://rubygems.org/gems/griddler-cloudmailin)
+[![Gem downloads](https://img.shields.io/gem/dt/griddler-cloudmailin.svg)](https://rubygems.org/gems/griddler-cloudmailin)
+[![Code quality](http://img.shields.io/codeclimate/github/thoughtbot/griddler-cloudmailin.svg?style=flat)](https://codeclimate.com/github/thoughtbot/griddler-cloudmailin)
+[![Dependency Status](https://gemnasium.com/badges/github.com/thoughtbot/griddler-cloudmailin.svg)](https://gemnasium.com/github.com/thoughtbot/griddler-cloudmailin)
+[![Security](https://hakiri.io/github/thoughtbot/griddler-cloudmailin/develop.svg)](https://hakiri.io/github/thoughtbot/griddler-cloudmailin/develop)
 
 An adapter for [Griddler](https://github.com/thoughtbot/griddler) to allow
 [Cloudmailin](http://cloudmailin.com) to be used with the gem.
