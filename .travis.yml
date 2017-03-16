@@ -1,6 +1,13 @@
----
 language: ruby
+dist: trusty
 rvm:
-  - 2.1.9
-script:
-  - rspec
+  - 2.4.0
+  - 2.3
+  - 2.2
+  - 1.9
+  - jruby
+
+before_install:
+  - gem update bundler
+
+script: bundle exec rspec
