@@ -1,13 +1,57 @@
 ---
-inherit_from: .rubocop_todo.yml
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - 'tmp/**/*'
+
+Metrics/BlockLength:
+  CountComments: false  # count full line comments?
+  Exclude:
+    - '**/*_spec.rb'
+
+StringLiterals:
+  EnforcedStyle: single_quotes
+  Enabled: true
+
+DotPosition:
+  Description: 'Checks the position of the dot in multi-line method calls.'
+  EnforcedStyle: leading
+  Enabled: true
+
+ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  EnforcedStyle: nested
+  Enabled: true
+
+Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+
+FileName:
+  Description: 'Use snake_case for source file names.'
+  Enabled: true
+
+LineLength:
+  Max: 120
+  Enabled: true
+
+Style/SymbolArray:
+  Description: 'Use %i or %I for arrays of symbols.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-i'
+  Enabled: true # Only available in Ruby 2.0+
+
+Style/ExtraSpacing:
+  Description: 'Do not use unnecessary spacing.'
+  Enabled: true
+
+Lint/LiteralInInterpolation:
+  Description: 'Avoid interpolating literals in strings'
+  AutoCorrect: true
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: no_comma
+  Enabled: true
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: no_comma
   Enabled: true
-
-StringLiterals:
-  EnforcedStyle: single_quotes
-  Enabled: false # turn off until we can do a global fix
-
-LineLength:
-  Max: 120

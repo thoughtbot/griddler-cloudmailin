@@ -75,7 +75,7 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
   end
 
   it 'changes attachments to an array of files' do
-    params = default_params.merge(attachments: { '0' => upload_1, '1' => upload_2 })
+    params = DEFAULT_PARAMS.merge(attachments: { '0' => upload_1, '1' => upload_2 })
 
     normalized_params = normalized(params)
     expect(normalized_params[:attachments]).to include(upload_1, upload_2)
@@ -88,62 +88,58 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
   end
 
   it 'wraps to in an array' do
-    expect(normalized[:to]).to eq([default_params[:headers][:To]])
+    expect(normalized[:to]).to eq([DEFAULT_PARAMS[:headers][:To]])
   end
 
   it 'wraps cc in an array' do
-    expect(normalized[:cc]).to eq([default_params[:headers][:Cc]])
+    expect(normalized[:cc]).to eq([DEFAULT_PARAMS[:headers][:Cc]])
   end
 
   it 'returns the date' do
-    expect(normalized[:date]).to eq(default_params[:headers][:Date].to_datetime)
+    expect(normalized[:date]).to eq(DEFAULT_PARAMS[:headers][:Date].to_datetime)
   end
 
   it 'returns an array even if cc is empty' do
     expect(normalized(nocc_params)[:cc]).to eq([])
   end
 
-  def normalized(params = default_params)
+  def normalized(params = DEFAULT_PARAMS)
     Griddler::Cloudmailin::Adapter.normalize_params(params)
   end
 
-  # There are some example real-world headers from Cloudmailin
-  # in doc/real_world_headers.rb
-  def default_params
-    {
-      envelope: {
-        to: 'some-identifier@example.com',
-        from: 'joeuser@example.com'
-      },
-      headers: {
-        Subject: 'Re: [ThisApp] That thing',
-        From: 'Joe User <joeuser@example.com>',
-        To: 'Some Identifier <some-identifier@example.com>',
-        Cc: 'emily@example.com',
-        Date: 'Fri, 30 Sep 2016 10:30:15 +0200'
-      },
-      plain: "Dear bob\n\nReply ABOVE THIS LINE\n\nhey sup"
-    }
-  end
-
   def bcc_params
-    default_params.merge(
-      envelope: default_params[:envelope].merge(to: 'sandra@example.com')
+    DEFAULT_PARAMS.merge(
+      envelope: DEFAULT_PARAMS[:envelope].merge(to: 'sandra@example.com')
     )
   end
 
   def nocc_params
-    default_params.merge(
-      headers: default_params[:headers].except(:Cc)
+    DEFAULT_PARAMS.merge(
+      headers: DEFAULT_PARAMS[:headers].except(:Cc)
     )
   end
 
   def cc_params
-    default_params.merge(
-      headers: default_params[:headers].merge(
+    DEFAULT_PARAMS.merge(
+      headers: DEFAULT_PARAMS[:headers].merge(
         Cc: 'Some Identifier <some-identifier@example.com>',
         To: 'emily@example.com'
       )
     )
   end
+
+  DEFAULT_PARAMS = {
+    envelope: {
+      to: 'some-identifier@example.com',
+      from: 'joeuser@example.com'
+    },
+    headers: {
+      Subject: 'Re: [ThisApp] That thing',
+      From: 'Joe User <joeuser@example.com>',
+      To: 'Some Identifier <some-identifier@example.com>',
+      Cc: 'emily@example.com',
+      Date: 'Fri, 30 Sep 2016 10:30:15 +0200'
+    },
+    plain: "Dear bob\n\nReply ABOVE THIS LINE\n\nhey sup"
+  }.freeze
 end
