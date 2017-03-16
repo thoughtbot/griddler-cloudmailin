@@ -51,3 +51,7 @@ Lint/LiteralInInterpolation:
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: no_comma
   Enabled: true
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+  Enabled: true
