@@ -13,7 +13,6 @@ An adapter for [Griddler](https://github.com/thoughtbot/griddler) to allow
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'griddler'
 gem 'griddler-cloudmailin'
 ```
 
