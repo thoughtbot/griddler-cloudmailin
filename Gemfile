@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'griddler', github: 'thoughtbot/griddler' # So as to include the spec folder
+gem 'nokogiri', (RUBY_VERSION < '2' ? '< 1.7' : '> 0') # Nokogiri >= 1.7 requires Ruby 2+
 
 gemspec
 

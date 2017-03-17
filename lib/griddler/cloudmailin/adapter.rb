@@ -67,7 +67,7 @@ module Griddler
       end
 
       def header_keys
-        @header_keys ||= legacy? ? KEY_LIST.map { |s| [s, s.capitalize] }.to_h : KEY_LIST.map { |s| [s, s] }.to_h
+        @header_keys ||= Hash[ legacy? ? KEY_LIST.map { |s| [s, s.capitalize] } : KEY_LIST.map { |s| [s, s] } ]
       end
 
       KEY_LIST = [:from, :to, :cc, :date, :subject].freeze
