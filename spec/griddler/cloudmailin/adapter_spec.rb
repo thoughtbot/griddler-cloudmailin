@@ -75,7 +75,7 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
   end
 
   it 'changes attachments to an array of files' do
-    params = DEFAULT_PARAMS.merge(attachments: { '0' => upload_1, '1' => upload_2 })
+    params = BASE_PARAMS.merge(attachments: { '0' => upload_1, '1' => upload_2 })
 
     normalized_params = normalized(params)
     expect(normalized_params[:attachments]).to include(upload_1, upload_2)
@@ -88,47 +88,67 @@ describe Griddler::Cloudmailin::Adapter, '.normalize_params' do
   end
 
   it 'wraps to in an array' do
-    expect(normalized[:to]).to eq([DEFAULT_PARAMS[:headers][:To]])
+    expect(normalized[:to]).to eq([BASE_PARAMS[:headers][:to]])
   end
 
   it 'wraps cc in an array' do
-    expect(normalized[:cc]).to eq([DEFAULT_PARAMS[:headers][:Cc]])
+    expect(normalized[:cc]).to eq([BASE_PARAMS[:headers][:cc]])
   end
 
   it 'returns the date' do
-    expect(normalized[:date]).to eq(DEFAULT_PARAMS[:headers][:Date].to_datetime)
+    expect(normalized[:date]).to eq(BASE_PARAMS[:headers][:date].to_datetime)
   end
 
   it 'returns an array even if cc is empty' do
     expect(normalized(nocc_params)[:cc]).to eq([])
   end
 
-  def normalized(params = DEFAULT_PARAMS)
+  it 'detects which format of params is in use' do
+    expect(Griddler::Cloudmailin::Adapter.new(BASE_PARAMS).legacy?).to be_falsey
+    expect(Griddler::Cloudmailin::Adapter.new(BASE_PARAMS_LEGACY).legacy?).to be_truthy
+  end
+
+  def normalized(params = BASE_PARAMS)
     Griddler::Cloudmailin::Adapter.normalize_params(params)
   end
 
   def bcc_params
-    DEFAULT_PARAMS.merge(
-      envelope: DEFAULT_PARAMS[:envelope].merge(to: 'sandra@example.com')
+    BASE_PARAMS.merge(
+      envelope: BASE_PARAMS[:envelope].merge(to: 'sandra@example.com')
     )
   end
 
   def nocc_params
-    DEFAULT_PARAMS.merge(
-      headers: DEFAULT_PARAMS[:headers].except(:Cc)
+    BASE_PARAMS.merge(
+      headers: BASE_PARAMS[:headers].except(:cc)
     )
   end
 
   def cc_params
-    DEFAULT_PARAMS.merge(
-      headers: DEFAULT_PARAMS[:headers].merge(
-        Cc: 'Some Identifier <some-identifier@example.com>',
-        To: 'emily@example.com'
+    BASE_PARAMS.merge(
+      headers: BASE_PARAMS[:headers].merge(
+        cc: 'Some Identifier <some-identifier@example.com>',
+        to: 'emily@example.com'
       )
     )
   end
 
-  DEFAULT_PARAMS = {
+  BASE_PARAMS = {
+    envelope: {
+      to: 'some-identifier@example.com',
+      from: 'joeuser@example.com'
+    },
+    headers: {
+      subject: 'Re: [ThisApp] That thing',
+      from: 'Joe User <joeuser@example.com>',
+      to: 'Some Identifier <some-identifier@example.com>',
+      cc: 'emily@example.com',
+      date: 'Fri, 30 Sep 2016 10:30:15 +0200'
+    },
+    plain: "Dear bob\n\nReply ABOVE THIS LINE\n\nhey sup"
+  }.freeze
+
+  BASE_PARAMS_LEGACY = {
     envelope: {
       to: 'some-identifier@example.com',
       from: 'joeuser@example.com'
