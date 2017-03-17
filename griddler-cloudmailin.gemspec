@@ -19,5 +19,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'griddler'
-  spec.add_dependency 'mime-types', '< 3.0', '>= 1.16' # 3.0 depends on Ruby >= 2.0
 end
