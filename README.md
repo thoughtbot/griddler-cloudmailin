@@ -5,7 +5,7 @@
 [![Dependency Status](https://gemnasium.com/badges/github.com/thoughtbot/griddler-cloudmailin.svg)](https://gemnasium.com/github.com/thoughtbot/griddler-cloudmailin)
 [![Security](https://hakiri.io/github/thoughtbot/griddler-cloudmailin/master.svg)](https://hakiri.io/github/thoughtbot/griddler-cloudmailin/master)
 [![Build status](https://img.shields.io/travis/thoughtbot/griddler-cloudmailin/master.svg)](https://travis-ci.org/thoughtbot/griddler-cloudmailin)
-[![Coverage Status](https://coveralls.io/repos/github/dominicsayers/mailchimp_api_v3/badge.svg?branch=develop)](https://coveralls.io/github/dominicsayers/mailchimp_api_v3?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/thoughtbot/griddler-cloudmailin/badge.svg?branch=develop)](https://coveralls.io/github/thoughtbot/griddler-cloudmailin?branch=develop)
 
 An adapter for [Griddler](https://github.com/thoughtbot/griddler) to allow
 [Cloudmailin](http://cloudmailin.com) to be used with the gem.
