@@ -1,5 +1,3 @@
-require 'active_support/core_ext/string/strip'
-
 module Griddler
   module Cloudmailin
     class Adapter
