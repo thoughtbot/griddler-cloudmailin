@@ -12,6 +12,10 @@ module Griddler
         normalized_params
       end
 
+      def legacy?
+        @legacy ||= headers.key? :From
+      end
+
       private
 
       attr_reader :params
@@ -21,24 +25,27 @@ module Griddler
       end
 
       def recipients(field)
-        params[:headers][field].to_s.split(',').map(&:strip)
+        headers[field].to_s.split(',').map(&:strip)
       end
 
       def ccs
-        @ccs ||= recipients(:Cc)
+        @ccs ||= recipients(header_keys[:cc])
       end
 
       def tos
-        @tos ||= recipients(:To)
+        @tos ||= recipients(header_keys[:to])
+      end
+
+      def envelope_to
+        @envelope_to ||= params[:envelope][:to]
+      end
+
+      def header_emails
+        @header_emails ||= (tos | ccs).map { |addressee| Griddler::EmailParser.parse_address(addressee)[:email] }
       end
 
       def bcc
-        return @bcc if @bcc
-        envelope_to = params[:envelope][:to]
-        header_to_emails = (tos | ccs).map do |addressee|
-          Griddler::EmailParser.parse_address(addressee)[:email]
-        end
-        @bcc = header_to_emails.include?(envelope_to) ? [] : [envelope_to]
+        @bcc ||= header_emails.include?(envelope_to) ? [] : [envelope_to]
       end
 
       def headers
@@ -49,15 +56,21 @@ module Griddler
         @base_params ||= {
           to: tos,
           cc: ccs,
-          from: headers[:From],
-          date: headers[:Date].try(:to_datetime),
-          subject: headers[:Subject],
+          from: headers[header_keys[:from]],
+          date: headers[header_keys[:date]].try(:to_datetime),
+          subject: headers[header_keys[:subject]],
           text: params[:plain],
           html: params[:html],
           attachments: params.fetch(:attachments) { {} }.values,
           headers: headers
         }
       end
+
+      def header_keys
+        @header_keys ||= Hash[legacy? ? KEY_LIST.map { |s| [s, s.capitalize] } : KEY_LIST.map { |s| [s, s] }]
+      end
+
+      KEY_LIST = [:from, :to, :cc, :date, :subject].freeze
     end
   end
 end

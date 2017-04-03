@@ -1,5 +1,6 @@
 ---
 AllCops:
+  TargetRubyVersion: 1.9
   DisplayCopNames: true
   Exclude:
     - 'tmp/**/*'
@@ -34,11 +35,6 @@ FileName:
 LineLength:
   Max: 120
   Enabled: true
-
-Style/SymbolArray:
-  Description: 'Use %i or %I for arrays of symbols.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-i'
-  Enabled: true # Only available in Ruby 2.0+
 
 Style/ExtraSpacing:
   Description: 'Do not use unnecessary spacing.'
