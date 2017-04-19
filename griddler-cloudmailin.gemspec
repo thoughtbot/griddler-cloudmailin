@@ -6,7 +6,7 @@ require 'griddler/cloudmailin/version'
 Gem::Specification.new do |spec|
   spec.name          = 'griddler-cloudmailin'
   spec.version       = Griddler::Cloudmailin::VERSION
-  spec.authors       = ['Dominic Sayers & Caleb Thompson']
+  spec.authors       = ['Dominic Sayers, Steve Smith and Caleb Thompson']
   spec.email         = ['dominic@sayers.cc']
   spec.summary       = 'Griddler Plugin for cloudmailin'
   spec.description   = 'Griddler Plugin for cloudmailin email parsing service'
